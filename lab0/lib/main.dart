@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             Image.asset(
-              'C:/Users/johan/Documents/TDDE43/lab0/images/Imagelab0TDDE43.png',
+              'images/Imagelab0TDDE43.png',
             ),
+
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.height * 0.2,
