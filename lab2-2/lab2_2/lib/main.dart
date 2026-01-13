@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,7 +29,6 @@ List<String> languages = [
   "Ruby",
   "Java",
 ];
-//http.Client httpClient = http.Client();
 
 class _NetTestState extends State<NetTest> {
   http.Client get _httpClient => widget.httpClient ?? http.Client();
@@ -57,7 +55,7 @@ class _NetTestState extends State<NetTest> {
             children: [
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.only(left: 580, right: 40),
+                padding: const EdgeInsets.only(right: 10),
                 child: DropdownButtonFormField<String>(
                   alignment: Alignment.center,
                   isExpanded: true,

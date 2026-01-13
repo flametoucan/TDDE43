@@ -1,46 +1,46 @@
-import 'dart:math';
+import 'dart:math'; //till random och för o flippa kortet
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // mest för typ input formatering
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatefulWidget { 
   const MyApp({super.key});
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState(); //så värden i myappstate() kan ändras typ
 }
 
-class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  String cardNumber = '';
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin { // SingleTickerProviderStateMixin behövs för animationer, vsync och animationcontroller
+  String cardNumber = ''; 
   String cardHolder = '';
   String cvv = '';
-  String selectedMonth = 'MM';
-  String selectedYear = 'YY';
-  int minCardYear = DateTime.now().year;
+  String selectedMonth = 'MM'; //mest för startvärdet på månad och år men också för vart de sparas
+  String selectedYear = 'YY'; // se rad ovan
+  int minCardYear = DateTime.now().year; //inga år tidigare än det nuvarande året
   bool isCardFlipped = false;
-  int currentCardBackground = Random().nextInt(25) + 1;
-  String cardType = 'mastercard';
-  late AnimationController _controller;
-  late Animation<double> _flipAnimation;
-  Rect? focusRect;
-  bool isInputFocused = false;
+  int currentCardBackground = Random().nextInt(25) + 1; //kör bara en random backrgrund i början av varje körning
+  String cardType = 'mastercard'; // en som alltid börjar som standard
+  late AnimationController _controller; //för att kunna hålla koll på animationen
+  late Animation<double> _flipAnimation; // se ovan
+  Rect? focusRect; //så de kan finnas en blå upplysning vi fokuserad ruta.
+  bool isInputFocused = false; //håller koll på vilken ruta som är aktiv
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 500), //animationen tar 500 ms
     );
-    _flipAnimation = Tween<double>(
+    _flipAnimation = Tween<double>( //roterar 1 pi alltså 180 grader
       begin: 0,
       end: pi,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut)); //använder 3d flip funktion runt y-axeln.
   }
 
-  void flipCard(bool status) {
+  void flipCard(bool status) { //håller koll på vilken sida som visas och så animation och state håller ihop typ
     setState(() {
       isCardFlipped = status;
       if (status) {
@@ -51,18 +51,18 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     });
   }
 
-  String detectCardType(String number) {
+  String detectCardType(String number) { //kollar prefix på inslagna siffror för o se vilket kort som e rätt. hjälper med format o logga typ
     if (RegExp(r'^4').hasMatch(number)) return 'visa';
     if (RegExp(r'^(34|37)').hasMatch(number)) return 'amex';
     if (RegExp(r'^5[1-5]').hasMatch(number)) return 'mastercard';
     if (RegExp(r'^6011').hasMatch(number)) return 'discover';
     if (RegExp(r'^9792').hasMatch(number)) return 'troy';
-    return 'mastercard';
+    return 'mastercard'; //returnar mastercard om ingen annan stämmer typ bara
   }
 
   String formatCardNumber(String input) {
-    String digits = input.replaceAll(' ', '');
-    if (cardType == 'amex') {
+    String digits = input.replaceAll(' ', ''); //tar bort mellanslag så de som syns är endast vissuella
+    if (cardType == 'amex') { //Amex har lite speciella grejer, ex. endast 15 siffror och i annat format
       return digits
           .replaceAllMapped(
             RegExp(r'(.{4})(.{6})(.{0,5})'),
@@ -76,13 +76,13 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     }
   }
 
-  String _buildCardNumberDisplay(String input) {
-    String digits = input.replaceAll(' ', '');
-    String placeholder = '################'; // 16 tecken
-    String combined = digits + placeholder.substring(digits.length);
+  String _buildCardNumberDisplay(String input) { 
+    String digits = input.replaceAll(' ', ''); // tar bort mellanslag
+    String placeholder = '################'; // 16 tecken som standard mask
+    String combined = digits + placeholder.substring(digits.length); //lägger ihop de siffror som e inskrivna med masken typ bara
 
-    // Maskera mitten 8 siffror
-    List<String> chars = combined.split('');
+    
+    List<String> chars = combined.split(''); //den här der till så siffra 5-12 täcks med * 
     for (int i = 4; i < 12; i++) {
       if (chars[i] != '#') {
         chars[i] = '*';
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         .trim();
   }
 
-  void updateFocus(
+  void updateFocus( 
     BuildContext context,
     GlobalKey key, {
     bool flipBack = false,

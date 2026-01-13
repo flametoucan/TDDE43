@@ -15,12 +15,9 @@ class MyApp extends StatelessWidget {
           title: Text("Example 1", style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.green,
         ),
-
         body: Column(
           children: [
-            Image.asset(
-              'C:/Users/johan/Documents/TDDE43/lab0/images/Imagelab0TDDE43.png',
-            ),
+            Image.asset('images/BILD.png'),
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.height * 0.2,
@@ -33,7 +30,7 @@ class MyApp extends StatelessWidget {
                   mainAxisSpacing: 30,
                 ),
                 shrinkWrap: true,
-                itemCount: 4, // antal celler i rutnätet
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   return FloatingActionButton(
                     onPressed: () {
@@ -58,7 +55,6 @@ class MyApp extends StatelessWidget {
                   child: Text("Email", style: TextStyle(color: Colors.black)),
                 ),
                 SizedBox(width: 10),
-
                 SizedBox(
                   width: 150,
                   child: Expanded(
@@ -76,7 +72,7 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+        ),
+      );
   }
 }

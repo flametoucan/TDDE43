@@ -36,24 +36,33 @@ void main() {
   testWidgets('Dropdown and list load correctly', (WidgetTester tester) async {
     final fakeClient = FakeClient();
 
+    // Pumpa widgeten och vänta tills layout och asynkrona operationer är klara
     await tester.pumpWidget(NetTest(httpClient: fakeClient));
-
-    expect(find.byType(DropdownButtonFormField), findsOneWidget);
-    expect(find.text('Git list'), findsOneWidget);
-
-    expect(find.byType(itemCard), findsNothing);
-
     await tester.pumpAndSettle();
 
+    // Kontrollera att DropdownButtonFormField finns
+    expect(find.byType(DropdownButtonFormField<String>), findsOneWidget);
+
+    // Kontrollera att AppBar-titel finns
+    expect(find.text('Git list'), findsOneWidget);
+    
+    expect(find.byType(itemCard), findsOneWidget);
+
+    // Vänta på att FutureBuilder laddar data
+    await tester.pumpAndSettle();
+
+    // Kontrollera att fake repository visas korrekt
     expect(find.text('TestRepo'), findsOneWidget);
     expect(find.text('Test description'), findsOneWidget);
     expect(find.text('42'), findsOneWidget);
 
-    await tester.tap(find.byType(DropdownButtonFormField));
+    // Öppna dropdownen och välj Python
+    await tester.tap(find.byType(DropdownButtonFormField<String>));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Python').last);
     await tester.pumpAndSettle();
 
+    // Kontrollera att dropdownen visar det valda värdet
     expect(find.text('Python'), findsOneWidget);
   });
 }
