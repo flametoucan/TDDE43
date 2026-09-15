@@ -302,6 +302,9 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
             label: "Card Holder",
             key: _holderKey,
             controller: _holderController,
+            formatters: [
+              LengthLimitingTextInputFormatter(24)
+            ],
             onChanged: (val) => setState(() => _cardHolder = val.toUpperCase()),
             onTap: () => _updateFocus(_holderKey, flipBack: true),
           ),
