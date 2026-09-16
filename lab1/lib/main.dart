@@ -269,7 +269,7 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -280,23 +280,23 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildTextField(
-  label: "Card Number",
-  key: _numberKey,
-  controller: _numberController,
-  keyboardType: TextInputType.number,
-  formatters: [
-    FilteringTextInputFormatter.digitsOnly,
-    CardNumberInputFormatter(), // <-- Added custom space formatter
-    LengthLimitingTextInputFormatter(_cardType == 'amex' ? 18 : 19), // Account for spaces
-  ],
-  onChanged: (val) {
-    setState(() {
-      _cardType = _detectCardType(val);
-      _cardNumber = _formatCardNumber(val);
-    });
-  },
-  onTap: () => _updateFocus(_numberKey, flipBack: true),
-),
+            label: "Card Number",
+            key: _numberKey,
+            controller: _numberController,
+            keyboardType: TextInputType.number,
+            formatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              CardNumberInputFormatter(), // Added custom space formatter
+              LengthLimitingTextInputFormatter(_cardType == 'amex' ? 18 : 19), // Account for spaces
+            ],
+            onChanged: (val) {
+              setState(() {
+                _cardType = _detectCardType(val);
+                _cardNumber = _formatCardNumber(val);
+              });
+            },
+            onTap: () => _updateFocus(_numberKey, flipBack: true),
+          ),
           const SizedBox(height: 12),
           _buildTextField(
             label: "Card Holder",

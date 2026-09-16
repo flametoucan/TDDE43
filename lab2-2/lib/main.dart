@@ -98,7 +98,7 @@ class _NetTestState extends State<NetTest> {
                             index: index,
                             title: p.name,
                             description: p.description ?? " ",
-                            stars: p.stargazers_count,
+                            stars: p.stargazersCount,
                             onTap: () async {
                               await Navigator.push(
                                 context,
@@ -183,7 +183,7 @@ class detailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Vad som visas när man klicka sig in på ett kort
+    // Shows whats showing when you click on a card
     return Scaffold(
       backgroundColor: Colors.grey.shade600,
       appBar: AppBar(title: Text(post.name)),
@@ -195,7 +195,7 @@ class detailedScreen extends StatelessWidget {
             infoRow(
               context: context,
               index: 0,
-              text: 'Full Name: ${post.full_name}',
+              text: 'Full Name: ${post.fullName}',
             ),
             infoRow(
               context: context,
@@ -205,12 +205,12 @@ class detailedScreen extends StatelessWidget {
             infoRow(
               context: context,
               index: 2,
-              text: 'Stars: ${post.stargazers_count}',
+              text: 'Stars: ${post.stargazersCount}',
             ),
             infoRow(
               context: context,
               index: 3,
-              text: 'Forks: ${post.forks_count}',
+              text: 'Forks: ${post.forksCount}',
             ),
             infoRow(
               context: context,
@@ -256,7 +256,7 @@ class itemCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    //Det som visas på varje kort
+    //Whats showing on every card
     final bool isEven = index.isEven;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -302,10 +302,10 @@ class itemCard extends StatelessWidget {
 
 class Post {
   final String name;
-  final String full_name;
+  final String fullName;
   final String? description;
-  final int stargazers_count;
-  final int forks_count;
+  final int stargazersCount;
+  final int forksCount;
   final String created;
   final String updated;
   final String? homepage;
@@ -313,10 +313,10 @@ class Post {
 
   Post({
     required this.name,
-    required this.full_name,
-    required this.stargazers_count,
+    required this.fullName,
+    required this.stargazersCount,
     required this.description,
-    required this.forks_count,
+    required this.forksCount,
     required this.created,
     required this.updated,
     required this.homepage,
@@ -326,11 +326,11 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       name: json['name'],
-      stargazers_count: json['stargazers_count'],
+      stargazersCount: json['stargazersCount'],
 
       description: json['description'],
-      forks_count: json['forks_count'],
-      full_name: json['full_name'],
+      forksCount: json['forksCount'],
+      fullName: json['fullName'],
       created: json['created_at'],
       updated: json['updated_at'],
       homepage: json['homepage'],
