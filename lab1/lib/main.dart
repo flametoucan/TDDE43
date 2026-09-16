@@ -447,7 +447,7 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
     required ValueChanged<String?> onChanged,
   }) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       items: items,
       onChanged: onChanged,
       decoration: const InputDecoration(

@@ -59,7 +59,7 @@ class _NetTestState extends State<NetTest> {
                 child: DropdownButtonFormField<String>(
                   alignment: Alignment.center,
                   isExpanded: true,
-                  value: language,
+                  initialValue: language,
                   onChanged: (String? newLanguage) {
                     setState(() {
                       language = newLanguage!;
@@ -141,17 +141,23 @@ class _NetTestState extends State<NetTest> {
     );
 
     if (response.body.isEmpty) {
-      List<Post> test = [];
-      return test;
+      return [];
     }
+
     final jsonResponse = jsonDecode(response.body);
+
+    // GitHub returns a non-2xx status (e.g. 403 when rate-limited) with a
+    // body like {"message": "...", ...} instead of {"items": [...]}.
+    // Check for that instead of assuming 'items' always exists.
+    if (response.statusCode != 200 || jsonResponse['items'] == null) {
+      final message = jsonResponse['message'] ?? 'Unknown error from GitHub API';
+      throw Exception('GitHub API error (${response.statusCode}): $message');
+    }
 
     List items = jsonResponse['items'];
     if (items.isEmpty) {
-      List<Post> test = [];
-      return test;
+      return [];
     }
-    // Convert every item to a Post object
     return items.map((item) => Post.fromJson(item)).toList();
   }
 }
