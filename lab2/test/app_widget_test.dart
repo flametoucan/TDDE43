@@ -46,7 +46,7 @@ void main() {
     // Kontrollera att AppBar-titel finns
     expect(find.text('Git list'), findsOneWidget);
     
-    expect(find.byType(itemCard), findsOneWidget);
+    expect(find.byType(ItemCard), findsOneWidget);
 
     // Vänta på att FutureBuilder laddar data
     await tester.pumpAndSettle();

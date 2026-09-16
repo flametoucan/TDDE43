@@ -44,7 +44,7 @@ void main() {
     expect(find.byType(DropdownButtonFormField), findsOneWidget);
     expect(find.text('Git list'), findsOneWidget);
 
-    expect(find.byType(itemCard), findsNothing);
+    expect(find.byType(ItemCard), findsNothing);
 
     await tester.pumpAndSettle();
 

@@ -94,17 +94,17 @@ class _NetTestState extends State<NetTest> {
                         itemCount: posts.length,
                         itemBuilder: (context, index) {
                           final p = posts[index];
-                          return itemCard(
+                          return ItemCard(
                             index: index,
                             title: p.name,
                             description: p.description ?? " ",
-                            stars: p.stargazersCount,
+                            stars: p.stargazers_count,
                             onTap: () async {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return detailedScreen(post: p);
+                                    return DetailedScreen(post: p);
                                   },
                                 ),
                               );
@@ -162,9 +162,9 @@ class _NetTestState extends State<NetTest> {
   }
 }
 
-class detailedScreen extends StatelessWidget {
+class DetailedScreen extends StatelessWidget {
   final Post post;
-  const detailedScreen({super.key, required this.post});
+  const DetailedScreen({super.key, required this.post});
 
   Widget infoRow({
     required BuildContext context,
@@ -195,7 +195,7 @@ class detailedScreen extends StatelessWidget {
             infoRow(
               context: context,
               index: 0,
-              text: 'Full Name: ${post.fullName}',
+              text: 'Full Name: ${post.full_name}',
             ),
             infoRow(
               context: context,
@@ -205,12 +205,12 @@ class detailedScreen extends StatelessWidget {
             infoRow(
               context: context,
               index: 2,
-              text: 'Stars: ${post.stargazersCount}',
+              text: 'Stars: ${post.stargazers_count}',
             ),
             infoRow(
               context: context,
               index: 3,
-              text: 'Forks: ${post.forksCount}',
+              text: 'Forks: ${post.forks_count}',
             ),
             infoRow(
               context: context,
@@ -239,14 +239,14 @@ class detailedScreen extends StatelessWidget {
   }
 }
 
-class itemCard extends StatelessWidget {
+class ItemCard extends StatelessWidget {
   final String title;
   final String? description;
   final VoidCallback onTap;
   final int index;
   final int stars;
 
-  const itemCard({
+  const ItemCard({
     super.key,
     required this.title,
     required this.onTap,
@@ -302,10 +302,10 @@ class itemCard extends StatelessWidget {
 
 class Post {
   final String name;
-  final String fullName;
+  final String full_name;
   final String? description;
-  final int stargazersCount;
-  final int forksCount;
+  final int stargazers_count;
+  final int forks_count;
   final String created;
   final String updated;
   final String? homepage;
@@ -313,10 +313,10 @@ class Post {
 
   Post({
     required this.name,
-    required this.fullName,
-    required this.stargazersCount,
+    required this.full_name,
+    required this.stargazers_count,
     required this.description,
-    required this.forksCount,
+    required this.forks_count,
     required this.created,
     required this.updated,
     required this.homepage,
@@ -326,11 +326,11 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       name: json['name'],
-      stargazersCount: json['stargazersCount'],
+      stargazers_count: json['stargazers_count'],
 
       description: json['description'],
-      forksCount: json['forksCount'],
-      fullName: json['fullName'],
+      forks_count: json['forks_count'],
+      full_name: json['full_name'],
       created: json['created_at'],
       updated: json['updated_at'],
       homepage: json['homepage'],
