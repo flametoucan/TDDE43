@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'tablestriper.dart';
-import 'columnfilter.dart';
 import 'dart:math';
-
+import 'filterabletable.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,8 +49,6 @@ class _ExampleTableState extends State<ExampleTable> {
 
   late List<Map<String, String>> allRows;
 
-  String selectedCategory = 'All';
-
   @override
   void initState() {
     super.initState();
@@ -67,63 +63,9 @@ class _ExampleTableState extends State<ExampleTable> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> filteredRows = selectedCategory == 'All'
-        ? allRows
-        : ColumnFilter.filter(
-            rows: allRows,
-            column: 'category',
-            allowedValues: [selectedCategory],
-          );
-
-    final dropdownCategories = ['All', ...categories];
-
     return Scaffold(
       appBar: AppBar(title: const Text('Example Table with Filter')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DropdownButton<String>(
-              value: selectedCategory,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    selectedCategory = value;
-                  });
-                }
-              },
-              items: dropdownCategories
-                  .map((cat) => DropdownMenuItem(
-                        value: cat,
-                        child: Text(cat),
-                      ))
-                  .toList(),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredRows.length,
-              itemBuilder: (context, index) {
-                final row = filteredRows[index];
-                return TableStriper(
-                  index: index,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 8),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 50, child: Text('${index + 1}')),
-                        Expanded(child: Text(row['word']!)),
-                        Expanded(child: Text(row['category']!)),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+      body: FilterableTable(rows: allRows, categories: categories),
     );
   }
 }
