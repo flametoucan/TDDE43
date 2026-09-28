@@ -269,7 +269,7 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -484,7 +484,7 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(),
+                  color: Colors.black.withValues(alpha: 0.5),
                   blurRadius: 15,
                   offset: const Offset(0, 10),
                 ),
@@ -497,7 +497,7 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen>
             child: Container(
               // Dark overlay tint for visual contrast over dynamic background images
               decoration: BoxDecoration(
-                color: Colors.black.withValues(),
+                color: Colors.black.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: isBackVisible ? _buildCardBack() : _buildCardFront(),
